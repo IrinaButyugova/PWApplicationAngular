@@ -1,0 +1,47 @@
+<h2>Sing up</h2>
+<form [formGroup]="signUpForm" novalidate (ngSubmit)="submit()">
+    <div class="alert alert-danger" *ngIf="errorMessage != ''">
+        {{errorMessage}}
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" name="name" formControlName="name" />
+          
+        <div class="alert alert-danger"
+            *ngIf="signUpForm.controls['name'].invalid && signUpForm.controls['name'].touched">
+            Name not specified
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" name="email" formControlName="email" />
+          
+        <div class="alert alert-danger"
+            *ngIf="signUpForm.controls['email'].invalid && signUpForm.controls['email'].touched">
+            Incorrect email
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" name="password" formControlName="password" />
+          
+        <div class="alert alert-danger"
+            *ngIf="signUpForm.controls['password'].invalid && signUpForm.controls['password'].touched">
+            Password not specified
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password confirmation</label>
+        <input class="form-control" name="passwordConfirmation" formControlName="passwordConfirmation" />
+          
+        <div class="alert alert-danger"
+            *ngIf="signUpForm.controls['passwordConfirmation'].invalid && signUpForm.controls['passwordConfirmation'].touched">
+            Password confirmation not specified or does not match with password
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" [disabled]="signUpForm.invalid">
+            Submit
+        </button>
+    </div>
+</form>
