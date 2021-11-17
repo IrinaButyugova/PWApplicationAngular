@@ -1,3 +1,23 @@
 <div>{{userInfo.name}}</div>
 <div>PW balance: {{userInfo.balance}}</div>
+<table class="table">
+    <thead>
+        <th scope="col">Date</th>
+        <th scope="col">Correspondent name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Balance</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let transaction of transactions">
+            <td>{{transaction.date}}</td>
+            <td>{{transaction.username}}</td>
+            <td>{{transaction.amount | number:'1.2-2'}}</td>
+            <td>{{transaction.balance | number:'1.2-2'}}</td>
+            <td>
+                <button type="button" class="btn btn-link">Repeat</button>
+            </td>
+        </tr>
+    </tbody>  
+</table>
 <button type="button" class="btn btn-primary m-1" (click)="logout()">Logout</button>
