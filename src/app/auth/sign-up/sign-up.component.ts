@@ -3,15 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
-import { AuthService } from '../auth.services';
+import { AuthService } from '../../services/auth.service';
 import { mustMatchValidator } from '../../validators/must-match-validator';
 import { SignUpFormModel } from './sign-up.model';
 import { ValidEmailPattern } from 'src/app/app-config';
 
 @Component({
     selector: "sign-up",
-    templateUrl: "./sign-up.component.html",
-    providers: [AuthService]
+    templateUrl: "./sign-up.component.html"
 })
 
 export class SignUpComponent implements OnDestroy {
