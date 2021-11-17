@@ -19,4 +19,8 @@ export class StorageService {
             return null;
         }
     }
+
+    public clearLocalStorage() {
+        localStorage.clear();
+    }
 } 

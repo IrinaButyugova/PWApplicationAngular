@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 
 import { AuthModel } from './auth.model';
 import { environment } from 'src/environments/environment';
+import { Paths } from '../paths';
 import { StorageKeys } from './storage-keys';
 import { StorageService } from './storage.service';
 
@@ -44,6 +45,12 @@ export class AuthService {
 
     public getAuth$(){
         return of(this.auth$.value);
+    }
+
+    public logout$(){
+        this.storageService.clearLocalStorage();
+        this.auth$.next(false);
+        this.router.navigateByUrl(Paths.Auth);
     }
 
     /*private setAuth(token: string | null){
