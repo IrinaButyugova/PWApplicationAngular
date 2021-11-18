@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 
 import { AuthService } from '../services/auth.service';
 import { MainService } from './main.service';
+import { Paths } from '../paths';
 import { Transaction } from './transaction';
 import { UserInfo } from './user-info';
 
@@ -19,7 +21,8 @@ export class MainComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private mainService: MainService) {}
+        private mainService: MainService,
+        private router: Router) {}
 
     ngOnInit(){
         this.mainService.getUserInfo$()
@@ -48,6 +51,17 @@ export class MainComponent implements OnInit {
                 return 0;
             })
         });
+    }
+
+    public createTransaction() {
+        this.router.navigateByUrl(`/${Paths.CreateTransaction}`)
+    }
+
+    public repeatTransaction(username: string, amount: number){
+        if (amount < 0){
+            amount = (-1) * amount;
+        }
+        this.router.navigateByUrl(`/${Paths.CreateTransaction}?name=${username}&amount=${amount}`)
     }
 
     public logout(): void {

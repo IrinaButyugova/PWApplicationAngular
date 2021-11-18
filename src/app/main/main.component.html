@@ -1,5 +1,6 @@
 <div>{{userInfo.name}}</div>
 <div>PW balance: {{userInfo.balance | number:'1.2-2'}}</div>
+<button type="button" class="btn btn-primary m-1" (click)="createTransaction()">Create transaction</button>
 <table class="table">
     <thead>
         <th scope="col">Date</th>
@@ -15,7 +16,7 @@
             <td>{{transaction.amount | number:'1.2-2'}}</td>
             <td>{{transaction.balance | number:'1.2-2'}}</td>
             <td>
-                <button type="button" class="btn btn-link">Repeat</button>
+                <button type="button" class="btn btn-link" (click)="repeatTransaction(transaction.username, transaction.amount)">Repeat</button>
             </td>
         </tr>
     </tbody>  
