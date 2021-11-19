@@ -10,9 +10,7 @@ import { Paths } from '../paths';
 import { StorageKeys } from './storage-keys';
 import { StorageService } from './storage.service';
 
-@Injectable({
-    providedIn: "root",
-})
+@Injectable()
 export class AuthService {
     constructor(
         private http: HttpClient,
@@ -44,6 +42,12 @@ export class AuthService {
     }
 
     public getAuth$(){
+        if (this.auth$.value === false){
+            const token = this.storageService.getFromLocalStorage(StorageKeys.TOKEN);
+            if (token != null){
+                this.auth$.next(true); 
+            }
+        }
         return of(this.auth$.value);
     }
 

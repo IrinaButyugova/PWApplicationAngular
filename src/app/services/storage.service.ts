@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { StorageKeys } from './storage-keys';
 
-@Injectable({
-    providedIn: "root",
-  })
+@Injectable()
 export class StorageService {
     public addToLocalStorage(key: StorageKeys, data: any) {
         localStorage.setItem(key, JSON.stringify(data));

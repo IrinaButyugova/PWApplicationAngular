@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { DateHelperService } from './services/date-helper.service';
+import { StorageService } from './services/storage.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,10 @@ import { DateHelperService } from './services/date-helper.service';
     ReactiveFormsModule,
     BrowserAnimationsModule
   ],
-  providers: [AuthService, DateHelperService],
+  providers: [
+    AuthService, 
+    DateHelperService,
+    StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
