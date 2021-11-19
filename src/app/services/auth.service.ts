@@ -18,7 +18,6 @@ export class AuthService {
         private router: Router){ }
     
     private auth$ = new BehaviorSubject<boolean>(false);
-    private test = 4;
 
     public signUp$(
         username: string,
@@ -57,19 +56,9 @@ export class AuthService {
         this.router.navigateByUrl(Paths.Auth);
     }
 
-    /*private setAuth(token: string | null){
-        if (token === null) {
-            this.auth$.next(false);
-        }
-        else{
-            this.auth$.next(true); 
-        }
-    }*/
-
     private processTokenResponse(token: string){
         this.storageService.addToLocalStorage(StorageKeys.TOKEN, token);
         this.auth$.next(true);
-        this.test = 5;
         this.router.navigateByUrl("/")
     }
 }
