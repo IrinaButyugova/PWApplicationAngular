@@ -1,29 +1,29 @@
-<h2>Sing in</h2>
-<form [formGroup]="signInForm" novalidate (ngSubmit)="submit()">
-    <div class="alert alert-danger" *ngIf="errorMessage != ''">
-        {{errorMessage}}
-    </div>
-    <div class="form-group">
-        <label>Email</label>
-        <input class="form-control" name="email" formControlName="email" />
-          
-        <div class="alert alert-danger"
-            *ngIf="signInForm.controls['email'].invalid && signInForm.controls['email'].touched">
-            Incorrect email
+<div class="container-md">
+    <h2>Sing in</h2>
+    <form [formGroup]="signInForm" novalidate (ngSubmit)="submit()">
+        <div class="alert alert-danger" *ngIf="errorMessage != ''">
+            {{errorMessage}}
         </div>
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input class="form-control" name="password" formControlName="password" />
-          
-        <div class="alert alert-danger"
-            *ngIf="signInForm.controls['password'].invalid && signInForm.controls['password'].touched">
-            Password not specified
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input class="form-control" name="email" formControlName="email" id="email"/>   
+            <div class="alert alert-danger"
+                *ngIf="signInForm.controls['email'].invalid && signInForm.controls['email'].touched">
+                Incorrect email
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary" [disabled]="signInForm.invalid">
-            Submit
-        </button>
-    </div>
-</form>   
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input class="form-control" name="password" formControlName="password" id="password"/>   
+            <div class="alert alert-danger"
+                *ngIf="signInForm.controls['password'].invalid && signInForm.controls['password'].touched">
+                Password not specified
+            </div>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" [disabled]="signInForm.invalid">
+                Submit
+            </button>
+        </div>
+    </form>   
+</div>

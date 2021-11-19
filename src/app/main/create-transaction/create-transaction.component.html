@@ -1,29 +1,31 @@
-<h2>Create transaction</h2>
-<form [formGroup]="createTransactionForm" novalidate (ngSubmit)="submit()">
-    <div class="alert alert-danger" *ngIf="errorMessage != ''">
-        {{errorMessage}}
-    </div>
-    <div class="form-group">
-        <label>Recipient name</label>
-        <select class="form-select" formControlName="name">
-            <option *ngFor="let userInfo of usersInfo" value="{{userInfo.name}}">{{userInfo.name}}</option> 
-        </select>
-        <div class="alert alert-danger"
-            *ngIf="createTransactionForm.controls['name'].invalid && createTransactionForm.controls['name'].touched">
-            Recipient name not specified
+<div class="container-md">
+    <h2>Create transaction</h2>
+    <form [formGroup]="createTransactionForm" novalidate (ngSubmit)="submit()">
+        <div class="alert alert-danger" *ngIf="errorMessage != ''">
+            {{errorMessage}}
         </div>
-    </div>
-    <div class="form-group">
-        <label>Amount</label>
-        <input type="number" class="form-control" formControlName="amount" name="amount"/>
-        <div class="alert alert-danger"
-            *ngIf="createTransactionForm.controls['amount'].invalid && createTransactionForm.controls['amount'].touched">
-            Incorrect amount
+        <div class="mb-3">
+            <label for="name" class="form-label">Recipient name</label>
+            <select class="form-select" formControlName="name" id="name">
+                <option *ngFor="let userInfo of usersInfo" value="{{userInfo.name}}">{{userInfo.name}}</option> 
+            </select>
+            <div class="alert alert-danger"
+                *ngIf="createTransactionForm.controls['name'].invalid && createTransactionForm.controls['name'].touched">
+                Recipient name not specified
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary" [disabled]="createTransactionForm.invalid">
-            Submit
-        </button>
-    </div>
-</form>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" class="form-control" formControlName="amount" name="amount" id="amount"/>
+            <div class="alert alert-danger"
+                *ngIf="createTransactionForm.controls['amount'].invalid && createTransactionForm.controls['amount'].touched">
+                Incorrect amount
+            </div>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" [disabled]="createTransactionForm.invalid">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
