@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { CreateTransactionComponent } from './create-transaction/create-transaction.component';
 import { MainComponent } from './main.component';
@@ -16,7 +18,9 @@ import { MainService } from './main.service';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        MainRoutingModule],
+        MainRoutingModule,
+        MatDatepickerModule,
+        MatNativeDateModule],
     providers: [MainService]
 })
 

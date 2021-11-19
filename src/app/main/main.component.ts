@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 
 import { AuthService } from '../services/auth.service';
+import { DateHelperService } from '../services/date-helper.service';
 import { MainService } from './main.service';
 import { Paths } from '../paths';
 import { Transaction } from './transaction';
 import { UserInfo } from './user-info';
+import { FilterModel } from './filter.model';
 
 export type SortColumn = keyof Transaction;
 export type SortDirection = 'asc' | 'desc';
@@ -21,6 +23,7 @@ export class MainComponent implements OnInit {
     userInfo: UserInfo = new UserInfo("", "", "", 0);
     transactions: Array<Transaction> = new Array(); 
     errorMessages = new Array();
+    filterModel: FilterModel = new FilterModel();
 
     sortColumn: SortColumn = 'date';
     sortDirection: SortDirection = 'desc';
@@ -29,7 +32,8 @@ export class MainComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private mainService: MainService,
-        private router: Router) {}
+        private router: Router,
+        private dateHelperService: DateHelperService) {}
 
     ngOnInit(){
         this.mainService.getUserInfo$()
@@ -47,6 +51,7 @@ export class MainComponent implements OnInit {
             throw err; 
         }))
         .subscribe((data: Array<Transaction>) => {
+            data.forEach(a => a.date = this.dateHelperService.parseToDate(a.date.toString()));
             this.transactions = data;
             this.sort();
         });
@@ -82,5 +87,45 @@ export class MainComponent implements OnInit {
             const res = this.compare(a[this.sortColumn], b[this.sortColumn]);
             return this.sortDirection === 'asc' ? res : -res;
           });
+    }
+
+    public filter(){
+        this.mainService.getTransations$()
+        .pipe(catchError((err) => {
+            this.errorMessages.push(err.error);
+            throw err; 
+        }))
+        .subscribe((data: Array<Transaction>) => {
+            data.forEach(a => a.date = this.dateHelperService.parseToDate(a.date.toString()));
+
+            if(this.filterModel.startDate !== undefined && this.filterModel.startDate !== null){
+                data = data.filter(a => {
+                   return a.date >= this.filterModel.startDate!;
+               });
+            }
+            if(this.filterModel.endDate !== undefined && this.filterModel.endDate !== null){
+                data = data.filter(a => {
+                    return a.date <= this.filterModel.endDate!;
+                }) 
+            }
+            if(this.filterModel.name !== undefined && this.filterModel.name !== null &&
+                this.filterModel.name != ""){
+                    data = data.filter(a => {
+                    return a.username.includes(this.filterModel.name!);
+                }) 
+            }
+            if(this.filterModel.startAmount !== undefined && this.filterModel.startAmount !== null){
+                data = data.filter(a => {
+                    return a.amount >= this.filterModel.startAmount!;
+                })  
+            }
+            if(this.filterModel.endAmount !== undefined && this.filterModel.endAmount !== null){
+                data = data.filter(a => {
+                    return a.amount <= this.filterModel.endAmount!;
+                })  
+            }
+            this.transactions = data;
+            this.sort();
+        });
     }
 }
