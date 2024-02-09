@@ -1,4 +1,4 @@
-export class CreateTransactionFormModel{
-    name: string = "";
-    amount: number = 0;
+export class CreateTransactionFormModel {
+  name: string = "";
+  amount: number = 0;
 }
