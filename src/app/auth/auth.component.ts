@@ -3,6 +3,7 @@ import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 
 import { isLoggedInSelector } from "./store/selectors";
+import { logoutAction } from "./store/actions/logout.actions";
 
 @Component({
   selector: "auth",
@@ -24,5 +25,9 @@ export class AuthComponent implements OnInit {
 
   signUp(): void {
     this.signInActive = false;
+  }
+
+  logout(): void {
+    this.store.dispatch(logoutAction());
   }
 }

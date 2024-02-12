@@ -1,5 +1,5 @@
 @if (isLoggedIn$ | async) {
-
+    <button type="button" class="btn btn-primary m-1" (click)="logout()">Logout</button>
 }
 @else if (signInActive){
     <button type="button" class="btn btn-primary m-1" (click)="signUp()">Sign-up</button>

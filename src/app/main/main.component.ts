@@ -78,10 +78,6 @@ export class MainComponent implements OnInit {
     );
   }
 
-  public logout(): void {
-    this.authService.logout$();
-  }
-
   public sort(sortColumn?: SortColumn) {
     if (sortColumn !== undefined) {
       if (this.sortColumn !== sortColumn || this.sortDirection === "desc") {

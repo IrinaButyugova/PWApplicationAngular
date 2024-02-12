@@ -11,6 +11,7 @@ import { SignUpComponent } from "./sign-up/sign-up.component";
 import { SignInEffect } from "./store/effects/signIn.effect";
 import { reducers } from "./store/reducers";
 import { SignUpEffect } from "./store/effects/signUp.effect";
+import { LogoutEffect } from "./store/effects/logout.effect";
 
 @NgModule({
   declarations: [AuthComponent, SignInComponent, SignUpComponent],
@@ -20,7 +21,7 @@ import { SignUpEffect } from "./store/effects/signUp.effect";
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forFeature("auth", reducers),
-    EffectsModule.forFeature([SignInEffect, SignUpEffect]),
+    EffectsModule.forFeature([SignInEffect, SignUpEffect, LogoutEffect]),
   ],
 })
 export class AuthModule {}

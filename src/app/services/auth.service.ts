@@ -45,12 +45,6 @@ export class AuthService {
     return of(this.auth$.value);
   }
 
-  public logout$() {
-    //this.storageService.clearLocalStorage();
-    this.auth$.next(false);
-    this.router.navigateByUrl(Paths.Auth);
-  }
-
   private processTokenResponse(token: string) {
     //this.storageService.addToLocalStorage(StorageKeys.TOKEN, token);
     this.auth$.next(true);
