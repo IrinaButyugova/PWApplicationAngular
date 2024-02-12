@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { catchError } from "rxjs/operators";
 
 import { CreateTransactionFormModel } from "./create-transaction-form.model";
-import { MainService } from "../main.service";
-import { UserInfo } from "../user-info";
+import { MainService } from "../services/main.service";
+import { CurrentUserInterface } from "../types/currentUser.interface";
 
 @Component({
   selector: "create-tran",
@@ -14,7 +14,7 @@ import { UserInfo } from "../user-info";
 export class CreateTransactionComponent implements OnInit {
   createTransactionForm: FormGroup;
   errorMessage: string = "";
-  usersInfo: Array<UserInfo> = new Array();
+  usersInfo: Array<CurrentUserInterface> = new Array();
 
   constructor(
     private mainService: MainService,
@@ -49,7 +49,7 @@ export class CreateTransactionComponent implements OnInit {
         throw err;
       })
     )
-    .subscribe((data: Array<UserInfo>) => {
+    .subscribe((data: Array<CurrentUserInterface>) => {
       this.usersInfo = data;
     });
   }

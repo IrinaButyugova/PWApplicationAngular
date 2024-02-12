@@ -2,13 +2,14 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from "@angular/router";
 
-import { CreateTransactionModel } from "./create-transaction.model";
+import { CreateTransactionModel } from "../create-transaction.model";
 import { environment } from "src/environments/environment";
-import { StorageKeys } from "../services/storage-keys";
-import { StorageService } from "../services/storage.service";
-import { map, tap } from "rxjs";
-import { Transaction } from "./transaction";
-import { UserInfo } from "./user-info";
+import { StorageKeys } from "../../services/storage-keys";
+import { StorageService } from "../../services/storage.service";
+import { Observable, map, tap } from "rxjs";
+import { Transaction } from "../transaction";
+import { CurrentUserInterface } from "../types/currentUser.interface";
+import { CurrentUserResponseInterface } from "../types/currentUserResponse.interface";
 
 @Injectable()
 export class MainService {
@@ -18,24 +19,22 @@ export class MainService {
     private router: Router
   ) {}
 
-  public getUserInfo$() {
+  public getCurrentUser(): Observable<CurrentUserInterface> {
     const httpHeaders = new HttpHeaders().set(
       "Authorization",
       this.getTokenString()
     );
+
     return this.http
-    .get(`${environment.baseUrl}api/protected/user-info`, {
-      headers: httpHeaders,
-    })
+    .get<CurrentUserResponseInterface>(
+      `${environment.baseUrl}api/protected/user-info`,
+      {
+        headers: httpHeaders,
+      }
+    )
     .pipe(
-      map((response: any) => {
-        const userInfoToken = response.user_info_token;
-        return new UserInfo(
-          userInfoToken.id,
-          userInfoToken.name,
-          userInfoToken.email,
-          userInfoToken.balance
-        );
+      map((response: CurrentUserResponseInterface) => {
+        return response.user_info_token;
       })
     );
   }
@@ -53,7 +52,7 @@ export class MainService {
     .pipe(
       map((response: any) => {
         return response.map((data: any) => {
-          return new UserInfo(data.id, data.name);
+          return null; //new UserInfo(data.id, data.name);
         });
       })
     );

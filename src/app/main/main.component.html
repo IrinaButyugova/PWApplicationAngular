@@ -1,6 +1,6 @@
 <div class="container-fluid">
-<div>{{userInfo.name}}</div>
-<div>PW balance: {{userInfo.balance | number:'1.2-2'}}</div>
+<div>{{(currentUser$ | async)?.name}}</div>
+<div>PW balance: {{(currentUser$ | async)?.balance | number:'1.2-2'}}</div>
 <button type="button" class="btn btn-primary m-1" (click)="createTransaction()">Create transaction</button>
 <div class="row">
     <div class="col">

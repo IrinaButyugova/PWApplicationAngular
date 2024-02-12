@@ -3,11 +3,15 @@ import { Router } from "@angular/router";
 import { catchError } from "rxjs/operators";
 
 import { DateHelperService } from "../services/date-helper.service";
-import { MainService } from "./main.service";
+import { MainService } from "./services/main.service";
 import { Paths } from "../paths";
 import { Transaction } from "./transaction";
-import { UserInfo } from "./user-info";
 import { FilterModel } from "./filter.model";
+import { Observable } from "rxjs";
+import { CurrentUserInterface } from "./types/currentUser.interface";
+import { Store, select } from "@ngrx/store";
+import { currentUserSelector } from "./store/selectors";
+import { getCurrentUserAction } from "./store/actions/getCurrentUser.action";
 
 export type SortColumn = keyof Transaction;
 export type SortDirection = "asc" | "desc";
@@ -17,7 +21,7 @@ export type SortDirection = "asc" | "desc";
   templateUrl: "./main.component.html",
 })
 export class MainComponent implements OnInit {
-  userInfo: UserInfo = new UserInfo("", "", "", 0);
+  currentUser$!: Observable<CurrentUserInterface | null>;
   transactions: Array<Transaction> = new Array();
   errorMessages = new Array();
   filterModel: FilterModel = new FilterModel();
@@ -30,21 +34,14 @@ export class MainComponent implements OnInit {
   constructor(
     private mainService: MainService,
     private router: Router,
-    private dateHelperService: DateHelperService
+    private dateHelperService: DateHelperService,
+    private store: Store
   ) {}
 
   ngOnInit() {
-    this.mainService
-    .getUserInfo$()
-    .pipe(
-      catchError((err) => {
-        this.errorMessages.push(err.error);
-        throw err;
-      })
-    )
-    .subscribe((data: UserInfo) => {
-      this.userInfo = data;
-    });
+    this.currentUser$ = this.store.pipe(select(currentUserSelector));
+
+    this.store.dispatch(getCurrentUserAction());
 
     this.mainService
     .getTransations$()
