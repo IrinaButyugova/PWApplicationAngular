@@ -1,5 +1,5 @@
 <div class="container-md">
-    <h2>Sing in</h2>
+    <h2>Sign in</h2>
     <form [formGroup]="signInForm" novalidate (ngSubmit)="submit()">
         <div class="alert alert-danger" *ngIf="(errorMessage$ | async)">
             {{errorMessage$ | async}}
