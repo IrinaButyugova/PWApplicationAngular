@@ -15,6 +15,11 @@ export const currentUserSelector = createSelector(
   (mainState: MainStateInterface) => mainState.currentUser
 );
 
+export const transactionsSelector = createSelector(
+  mainFeatureSelector,
+  (mainState: MainStateInterface) => mainState.transactions
+);
+
 export const errorSelector = createSelector(
   mainFeatureSelector,
   (mainState: MainStateInterface) => mainState.error

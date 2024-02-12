@@ -12,6 +12,7 @@ import { MainRoutingModule } from "./main-routing.module";
 import { MainService } from "./services/main.service";
 import { reducers } from "./store/reducers";
 import { GetCurrentUserEffect } from "./store/effects/getCurrentUser.effect";
+import { GetTransactionsEffect } from "./store/effects/getTransactions.effect";
 
 @NgModule({
   declarations: [CreateTransactionComponent, MainComponent],
@@ -23,7 +24,7 @@ import { GetCurrentUserEffect } from "./store/effects/getCurrentUser.effect";
     MatDatepickerModule,
     MatNativeDateModule,
     StoreModule.forFeature("main", reducers),
-    EffectsModule.forFeature([GetCurrentUserEffect]),
+    EffectsModule.forFeature([GetCurrentUserEffect, GetTransactionsEffect]),
   ],
   providers: [MainService],
   exports: [MainComponent],

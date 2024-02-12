@@ -63,16 +63,21 @@
         <th scope="col">Balance</th>
         <th scope="col"></th>
     </thead>
+    @if(transactions$ | async){
     <tbody>
-        <tr *ngFor="let transaction of transactions">
-            <td>{{transaction.date | date:'dd.MM.yyyy HH.MM.ss'}}</td>
-            <td>{{transaction.username}}</td>
-            <td>{{transaction.amount | number:'1.2-2'}}</td>
-            <td>{{transaction.balance | number:'1.2-2'}}</td>
-            <td>
-                <button type="button" class="btn btn-link" (click)="repeatTransaction(transaction.username, transaction.amount)">Repeat</button>
-            </td>
-        </tr>
-    </tbody>  
+        @for(transaction of (transactions$ | async); track transaction){
+            <tr>
+                <td>{{transaction.date}}</td>
+                <td>{{transaction.username}}</td>
+                <td>{{transaction.amount | number:'1.2-2'}}</td>
+                <td>{{transaction.balance | number:'1.2-2'}}</td>
+                <td>
+                    <button type="button" class="btn btn-link" (click)="repeatTransaction(transaction.username, transaction.amount)">Repeat</button>
+                </td>
+            </tr>
+        }
+        
+    </tbody> 
+} 
 </table>
 </div>

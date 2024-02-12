@@ -7,9 +7,10 @@ import { environment } from "src/environments/environment";
 import { StorageKeys } from "../../services/storage-keys";
 import { StorageService } from "../../services/storage.service";
 import { Observable, map, tap } from "rxjs";
-import { Transaction } from "../transaction";
+import { TransactionInterface } from "../types/transaction.iterface";
 import { CurrentUserInterface } from "../types/currentUser.interface";
 import { CurrentUserResponseInterface } from "../types/currentUserResponse.interface";
+import { TransactionsResponseInterface } from "../types/transactionsResponse.interface";
 
 @Injectable()
 export class MainService {
@@ -58,27 +59,21 @@ export class MainService {
     );
   }
 
-  public getTransations$() {
+  public getTransations(): Observable<TransactionInterface[]> {
     const httpHeaders = new HttpHeaders().set(
       "Authorization",
       this.getTokenString()
     );
     return this.http
-    .get(`${environment.baseUrl}api/protected/transactions`, {
-      headers: httpHeaders,
-    })
+    .get<TransactionsResponseInterface>(
+      `${environment.baseUrl}api/protected/transactions`,
+      {
+        headers: httpHeaders,
+      }
+    )
     .pipe(
-      map((response: any) => {
-        const transToken = response.trans_token;
-        return transToken.map((data: any) => {
-          return new Transaction(
-            data.id,
-            data.date,
-            data.username,
-            data.amount,
-            data.balance
-          );
-        });
+      map((response: TransactionsResponseInterface) => {
+        return response.trans_token;
       })
     );
   }
