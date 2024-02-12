@@ -11,7 +11,11 @@ import {
   signUpFailureAction,
   signUpSuccessAction,
 } from "./actions/signUp.actions";
-import { logoutAction, logoutSuccessAction } from "./actions/logout.actions";
+import {
+  logoutAction,
+  logoutFailureAction,
+  logoutSuccessAction,
+} from "./actions/logout.actions";
 
 const initialState: AuthStateInterface = {
   isSubmitting: false,
@@ -86,7 +90,7 @@ const authReducer = createReducer(
     })
   ),
   on(
-    signUpFailureAction,
+    logoutFailureAction,
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
