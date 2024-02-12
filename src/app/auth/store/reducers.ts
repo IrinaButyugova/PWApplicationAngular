@@ -16,6 +16,11 @@ import {
   logoutFailureAction,
   logoutSuccessAction,
 } from "./actions/logout.actions";
+import {
+  authCheckAction,
+  authCheckFailureAction,
+  authCheckSuccessAction,
+} from "./actions/authCheck.actions";
 
 const initialState: AuthStateInterface = {
   isSubmitting: false,
@@ -91,6 +96,30 @@ const authReducer = createReducer(
   ),
   on(
     logoutFailureAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      error: action.error,
+    })
+  ),
+  on(
+    authCheckAction,
+    (state): AuthStateInterface => ({
+      ...state,
+      isSubmitting: true,
+      error: null,
+    })
+  ),
+  on(
+    authCheckSuccessAction,
+    (state, action): AuthStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      isLoggedIn: action.isLoggedIn,
+    })
+  ),
+  on(
+    authCheckFailureAction,
     (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,

@@ -1,4 +1,8 @@
 export enum ActionTypes {
+  AUTH_CHECK = "[Auth] Check",
+  AUTH_CHECK_SUCCESS = "[Auth] Check succeess",
+  AUTH_CHECK_FAILURE = "[Auth] Check failure",
+
   SIGN_IN = "[Auth] Sign in",
   SIGN_IN_SUCCESS = "[Auth] Sign in success",
   SIGN_IN_FAILURE = "[Auth] Sign in failure",

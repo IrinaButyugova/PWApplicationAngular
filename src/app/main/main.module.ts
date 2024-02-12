@@ -20,5 +20,6 @@ import { MainService } from "./main.service";
     MatNativeDateModule,
   ],
   providers: [MainService],
+  exports: [MainComponent],
 })
 export class MainModule {}

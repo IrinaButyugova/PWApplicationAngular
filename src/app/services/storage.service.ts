@@ -5,7 +5,7 @@ import { StorageKeys } from "./storage-keys";
 @Injectable()
 export class StorageService {
   public addToLocalStorage(key: StorageKeys, data: any) {
-    localStorage.setItem(key, JSON.stringify(data));
+    localStorage.setItem(key, data);
   }
 
   public getFromLocalStorage(key: StorageKeys): any {
