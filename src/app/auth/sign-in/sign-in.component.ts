@@ -1,52 +1,44 @@
-import { Component, OnDestroy} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { catchError, takeUntil } from 'rxjs/operators';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Observable } from "rxjs";
+import { Store, select } from "@ngrx/store";
 
-import { AuthService } from '../../services/auth.service';
-import { SignInFormModel } from './sign-in.model';
-import { ValidEmailPattern } from 'src/app/app-config';
+import { SignInFormModel } from "./sign-in.model";
+import { ValidEmailPattern } from "src/app/app-config";
+import { errorSelector, isSubmittingSelector } from "../store/selectors";
+import { SignInRequestInterface } from "src/app/types/signInRequest.interface";
+import { signInAction } from "../store/actions/signIn.actions";
 
 @Component({
-    selector: "sign-in",
-    templateUrl: "./sign-in.component.html"
+  selector: "sign-in",
+  templateUrl: "./sign-in.component.html",
 })
+export class SignInComponent implements OnInit {
+  signInForm!: FormGroup;
+  isSubmitting$!: Observable<boolean>;
+  errorMessage$!: Observable<string | null>;
 
-export class SignInComponent implements OnDestroy {
-    signInForm: FormGroup;
-    errorMessage: String = "";
+  constructor(private formBuilder: FormBuilder, private store: Store) {}
 
-    private onDestroy$ = new Subject();
+  ngOnInit(): void {
+    this.signInForm = this.formBuilder.group(new SignInFormModel());
+    this.signInForm.controls["email"].setValidators([
+      Validators.required,
+      Validators.pattern(ValidEmailPattern),
+    ]);
+    this.signInForm.controls["password"].setValidators([Validators.required]);
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private authService: AuthService
-    ){
-        this.signInForm = this.formBuilder.group(new SignInFormModel());
-        this.signInForm.controls["email"].setValidators([
-            Validators.required,
-            Validators.pattern(ValidEmailPattern),
-          ]);
-        this.signInForm.controls["password"].setValidators([Validators.required]);
+    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
+    this.errorMessage$ = this.store.pipe(select(errorSelector));
+  }
+
+  submit(): void {
+    if (this.signInForm.valid) {
+      const request: SignInRequestInterface = {
+        email: this.signInForm.value["email"],
+        password: this.signInForm.value["password"],
+      };
+      this.store.dispatch(signInAction({ request }));
     }
-
-    submit() {
-        if (this.signInForm.valid) {
-            this.authService.signIn$(this.signInForm.value["email"],
-            this.signInForm.value["password"])
-            .pipe(catchError((err) => {
-                this.errorMessage = err.error;
-                throw err; 
-            }),
-            takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                this.errorMessage = "";
-            });
-        }
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(null);
-        this.onDestroy$.complete();
-    }
+  }
 }

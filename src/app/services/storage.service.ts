@@ -8,15 +8,14 @@ export class StorageService {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  public getFromLocalStorage<TModel>(key: StorageKeys) {
+  public getFromLocalStorage(key: StorageKeys): any {
     const data = localStorage.getItem(key);
     if (data != null) {
-      return JSON.parse(data) as TModel;
+      return data;
     } else {
       return null;
     }
   }
-
   public clearLocalStorage() {
     localStorage.clear();
   }

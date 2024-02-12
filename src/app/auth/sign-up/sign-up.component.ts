@@ -1,27 +1,27 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Subject } from "rxjs";
-import { catchError, takeUntil } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { Store, select } from "@ngrx/store";
 
-import { AuthService } from "../../services/auth.service";
 import { mustMatchValidator } from "../../validators/must-match-validator";
 import { SignUpFormModel } from "./sign-up.model";
 import { ValidEmailPattern } from "src/app/app-config";
+import { errorSelector, isSubmittingSelector } from "../store/selectors";
+import { SignUpRequestInterface } from "src/app/types/signUpRequest.interface";
+import { signUpAction } from "../store/actions/signUp.actions";
 
 @Component({
   selector: "sign-up",
   templateUrl: "./sign-up.component.html",
 })
-export class SignUpComponent implements OnDestroy {
-  signUpForm: FormGroup;
-  errorMessage: String = "";
+export class SignUpComponent implements OnInit {
+  signUpForm!: FormGroup;
+  isSubmitting$!: Observable<boolean>;
+  errorMessage$!: Observable<string | null>;
 
-  private onDestroy$ = new Subject();
+  constructor(private formBuilder: FormBuilder, private store: Store) {}
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService
-  ) {
+  ngOnInit(): void {
     this.signUpForm = this.formBuilder.group(new SignUpFormModel(), {
       validators: mustMatchValidator("password", "passwordConfirmation"),
     });
@@ -34,31 +34,19 @@ export class SignUpComponent implements OnDestroy {
     this.signUpForm.controls["passwordConfirmation"].setValidators([
       Validators.required,
     ]);
+
+    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
+    this.errorMessage$ = this.store.pipe(select(errorSelector));
   }
 
   submit() {
     if (this.signUpForm.valid) {
-      this.authService
-      .signUp$(
-        this.signUpForm.value["name"],
-        this.signUpForm.value["email"],
-        this.signUpForm.value["password"]
-      )
-      .pipe(
-        catchError((err) => {
-          this.errorMessage = err.error;
-          throw err;
-        }),
-        takeUntil(this.onDestroy$)
-      )
-      .subscribe(() => {
-        this.errorMessage = "";
-      });
+      const request: SignUpRequestInterface = {
+        username: this.signUpForm.value["name"],
+        email: this.signUpForm.value["email"],
+        password: this.signUpForm.value["password"],
+      };
+      this.store.dispatch(signUpAction({ request }));
     }
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroy$.next(null);
-    this.onDestroy$.complete();
   }
 }
