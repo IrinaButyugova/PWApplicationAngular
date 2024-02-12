@@ -12,6 +12,7 @@ import { SignInEffect } from "./store/effects/signIn.effect";
 import { reducers } from "./store/reducers";
 import { SignUpEffect } from "./store/effects/signUp.effect";
 import { LogoutEffect } from "./store/effects/logout.effect";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [AuthComponent, SignInComponent, SignUpComponent],
@@ -20,6 +21,7 @@ import { LogoutEffect } from "./store/effects/logout.effect";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     StoreModule.forFeature("auth", reducers),
     EffectsModule.forFeature([SignInEffect, SignUpEffect, LogoutEffect]),
   ],

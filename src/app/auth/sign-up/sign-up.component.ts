@@ -6,7 +6,7 @@ import { Store, select } from "@ngrx/store";
 import { mustMatchValidator } from "../../validators/must-match-validator";
 import { SignUpFormModel } from "./sign-up.model";
 import { ValidEmailPattern } from "src/app/app-config";
-import { errorSelector, isSubmittingSelector } from "../store/selectors";
+import { isSubmittingSelector } from "../store/selectors";
 import { SignUpRequestInterface } from "src/app/types/signUpRequest.interface";
 import { signUpAction } from "../store/actions/signUp.actions";
 
@@ -17,7 +17,6 @@ import { signUpAction } from "../store/actions/signUp.actions";
 export class SignUpComponent implements OnInit {
   signUpForm!: FormGroup;
   isSubmitting$!: Observable<boolean>;
-  errorMessage$!: Observable<string | null>;
 
   constructor(private formBuilder: FormBuilder, private store: Store) {}
 
@@ -36,7 +35,6 @@ export class SignUpComponent implements OnInit {
     ]);
 
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.errorMessage$ = this.store.pipe(select(errorSelector));
   }
 
   submit() {

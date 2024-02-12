@@ -5,7 +5,7 @@ import { Store, select } from "@ngrx/store";
 
 import { SignInFormModel } from "./sign-in.model";
 import { ValidEmailPattern } from "src/app/app-config";
-import { errorSelector, isSubmittingSelector } from "../store/selectors";
+import { isSubmittingSelector } from "../store/selectors";
 import { SignInRequestInterface } from "src/app/types/signInRequest.interface";
 import { signInAction } from "../store/actions/signIn.actions";
 
@@ -16,7 +16,6 @@ import { signInAction } from "../store/actions/signIn.actions";
 export class SignInComponent implements OnInit {
   signInForm!: FormGroup;
   isSubmitting$!: Observable<boolean>;
-  errorMessage$!: Observable<string | null>;
 
   constructor(private formBuilder: FormBuilder, private store: Store) {}
 
@@ -29,7 +28,6 @@ export class SignInComponent implements OnInit {
     this.signInForm.controls["password"].setValidators([Validators.required]);
 
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
-    this.errorMessage$ = this.store.pipe(select(errorSelector));
   }
 
   submit(): void {
