@@ -4,13 +4,14 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
+
 import { AppComponent } from "./app.component";
 import { DateHelperService } from "./services/date-helper.service";
 import { StorageService } from "./services/storage.service";
 import { AuthModule } from "./auth/auth.module";
-import { StoreModule } from "@ngrx/store";
 import { environment } from "src/environments/environment";
-import { EffectsModule } from "@ngrx/effects";
 import { MainModule } from "./main/main.module";
 
 @NgModule({
