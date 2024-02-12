@@ -6,7 +6,7 @@ import { Store, select } from "@ngrx/store";
 import { SignInFormModel } from "./sign-in.model";
 import { ValidEmailPattern } from "src/app/app-config";
 import { isSubmittingSelector } from "../store/selectors";
-import { SignInRequestInterface } from "src/app/types/signInRequest.interface";
+import { SignInRequestInterface } from "src/app/auth/types/signInRequest.interface";
 import { signInAction } from "../store/actions/signIn.actions";
 
 @Component({

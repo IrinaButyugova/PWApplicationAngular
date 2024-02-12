@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { AppComponent } from "./app.component";
-import { AuthService } from "./services/auth.service";
 import { DateHelperService } from "./services/date-helper.service";
 import { StorageService } from "./services/storage.service";
 import { AuthModule } from "./auth/auth.module";
@@ -35,7 +34,7 @@ import { MainModule } from "./main/main.module";
       connectInZone: true,
     }),
   ],
-  providers: [AuthService, DateHelperService, StorageService],
+  providers: [DateHelperService, StorageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

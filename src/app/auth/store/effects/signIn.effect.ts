@@ -8,7 +8,7 @@ import {
   signInFailureAction,
   signInSuccessAction,
 } from "../actions/signIn.actions";
-import { AuthService } from "src/app/services/auth.service";
+import { AuthService } from "src/app/auth/services/auth.service";
 import { StorageService } from "src/app/services/storage.service";
 import { StorageKeys } from "src/app/services/storage-keys";
 

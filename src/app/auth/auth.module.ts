@@ -13,6 +13,7 @@ import { SignUpEffect } from "./store/effects/signUp.effect";
 import { LogoutEffect } from "./store/effects/logout.effect";
 import { SharedModule } from "../shared/shared.module";
 import { AuthCheckEffect } from "./store/effects/authCheck.effect";
+import { AuthService } from "./services/auth.service";
 
 @NgModule({
   declarations: [AuthComponent, SignInComponent, SignUpComponent],
@@ -30,5 +31,6 @@ import { AuthCheckEffect } from "./store/effects/authCheck.effect";
     ]),
   ],
   exports: [AuthComponent],
+  providers: [AuthService],
 })
 export class AuthModule {}

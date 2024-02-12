@@ -2,7 +2,6 @@ import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError } from "rxjs/operators";
 
-import { AuthService } from "../services/auth.service";
 import { DateHelperService } from "../services/date-helper.service";
 import { MainService } from "./main.service";
 import { Paths } from "../paths";
@@ -29,7 +28,6 @@ export class MainComponent implements OnInit {
     v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
   constructor(
-    private authService: AuthService,
     private mainService: MainService,
     private router: Router,
     private dateHelperService: DateHelperService

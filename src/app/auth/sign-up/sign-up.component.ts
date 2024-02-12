@@ -7,7 +7,7 @@ import { mustMatchValidator } from "../../validators/must-match-validator";
 import { SignUpFormModel } from "./sign-up.model";
 import { ValidEmailPattern } from "src/app/app-config";
 import { isSubmittingSelector } from "../store/selectors";
-import { SignUpRequestInterface } from "src/app/types/signUpRequest.interface";
+import { SignUpRequestInterface } from "src/app/auth/types/signUpRequest.interface";
 import { signUpAction } from "../store/actions/signUp.actions";
 
 @Component({

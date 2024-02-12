@@ -1,7 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 
 import { ActionTypes } from "../actionTypes";
-import { SignInRequestInterface } from "../../../types/signInRequest.interface";
+import { SignInRequestInterface } from "../../types/signInRequest.interface";
 
 export const signInAction = createAction(
   ActionTypes.SIGN_IN,
