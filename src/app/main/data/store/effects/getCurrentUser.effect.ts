@@ -8,8 +8,8 @@ import {
   getCurrentUserFailureAction,
   getCurrentUserSuccessAction,
 } from "../actions/getCurrentUser.action";
-import { MainService } from "../../services/main.service";
-import { CurrentUserInterface } from "../../types/currentUser.interface";
+import { MainService } from "../../../services/main.service";
+import { CurrentUserInterface } from "../../../types/currentUser.interface";
 
 @Injectable()
 export class GetCurrentUserEffect {

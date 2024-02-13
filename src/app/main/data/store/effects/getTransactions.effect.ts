@@ -3,13 +3,13 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, of, switchMap } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
 
-import { MainService } from "../../services/main.service";
+import { MainService } from "../../../services/main.service";
 import {
   getTransactionsAction,
   getTransactionsFailureAction,
   getTransactionsSuccessAction,
 } from "../actions/getTransactions.action";
-import { TransactionInterface } from "../../types/transaction.iterface";
+import { TransactionInterface } from "../../../types/transaction.iterface";
 
 @Injectable()
 export class GetTransactionsEffect {

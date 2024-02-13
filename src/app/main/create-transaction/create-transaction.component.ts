@@ -5,7 +5,7 @@ import { catchError } from "rxjs/operators";
 
 import { CreateTransactionFormModel } from "./create-transaction-form.model";
 import { MainService } from "../services/main.service";
-import { CurrentUserInterface } from "../types/currentUser.interface";
+import { UserInterface } from "./types/user.interface";
 
 @Component({
   selector: "create-tran",
@@ -14,7 +14,7 @@ import { CurrentUserInterface } from "../types/currentUser.interface";
 export class CreateTransactionComponent implements OnInit {
   createTransactionForm: FormGroup;
   errorMessage: string = "";
-  usersInfo: Array<CurrentUserInterface> = new Array();
+  usersInfo: Array<UserInterface> = new Array();
 
   constructor(
     private mainService: MainService,
@@ -49,7 +49,7 @@ export class CreateTransactionComponent implements OnInit {
         throw err;
       })
     )
-    .subscribe((data: Array<CurrentUserInterface>) => {
+    .subscribe((data: Array<UserInterface>) => {
       this.usersInfo = data;
     });
   }

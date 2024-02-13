@@ -2,13 +2,13 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { CreateTransactionComponent } from "./create-transaction/create-transaction.component";
-import { MainComponent } from "./main.component";
-import { Paths } from "../paths";
+import { Paths } from "./paths";
+import { DataComponent } from "./data/data.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: MainComponent,
+    component: DataComponent,
   },
   {
     path: Paths.CreateTransaction,
@@ -17,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class MainRoutingModule {}

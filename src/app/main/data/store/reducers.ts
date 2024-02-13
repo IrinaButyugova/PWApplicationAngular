@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { MainStateInterface } from "../types/mainState.interface";
+import { DataStateInterface } from "../types/dataState.interface";
 import {
   getCurrentUserAction,
   getCurrentUserFailureAction,
@@ -11,18 +11,18 @@ import {
   getTransactionsSuccessAction,
 } from "./actions/getTransactions.action";
 
-const initialState: MainStateInterface = {
+const initialState: DataStateInterface = {
   isLoading: false,
   currentUser: null,
   transactions: null,
   error: null,
 };
 
-const mainReducer = createReducer(
+const dataReducer = createReducer(
   initialState,
   on(
     getCurrentUserAction,
-    (state): MainStateInterface => ({
+    (state): DataStateInterface => ({
       ...state,
       isLoading: true,
       error: null,
@@ -30,7 +30,7 @@ const mainReducer = createReducer(
   ),
   on(
     getCurrentUserSuccessAction,
-    (state, action): MainStateInterface => ({
+    (state, action): DataStateInterface => ({
       ...state,
       isLoading: false,
       currentUser: action.currentUser,
@@ -38,7 +38,7 @@ const mainReducer = createReducer(
   ),
   on(
     getCurrentUserFailureAction,
-    (state, action): MainStateInterface => ({
+    (state, action): DataStateInterface => ({
       ...state,
       isLoading: false,
       error: action.error,
@@ -46,7 +46,7 @@ const mainReducer = createReducer(
   ),
   on(
     getTransactionsAction,
-    (state): MainStateInterface => ({
+    (state): DataStateInterface => ({
       ...state,
       isLoading: true,
       error: null,
@@ -54,7 +54,7 @@ const mainReducer = createReducer(
   ),
   on(
     getTransactionsSuccessAction,
-    (state, action): MainStateInterface => ({
+    (state, action): DataStateInterface => ({
       ...state,
       isLoading: false,
       transactions: action.transactions,
@@ -62,7 +62,7 @@ const mainReducer = createReducer(
   ),
   on(
     getTransactionsFailureAction,
-    (state, action): MainStateInterface => ({
+    (state, action): DataStateInterface => ({
       ...state,
       isLoading: false,
       error: action.error,
@@ -70,6 +70,6 @@ const mainReducer = createReducer(
   )
 );
 
-export function reducers(state: MainStateInterface, action: Action) {
-  return mainReducer(state, action);
+export function reducers(state: DataStateInterface, action: Action) {
+  return dataReducer(state, action);
 }
