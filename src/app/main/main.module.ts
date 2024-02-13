@@ -10,10 +10,13 @@ import { CreateTransactionComponent } from "./create-transaction/create-transact
 import { MainComponent } from "./main.component";
 import { MainRoutingModule } from "./main-routing.module";
 import { MainService } from "./services/main.service";
-import { reducers } from "./data/store/reducers";
+import { reducers as dataReducers } from "./data/store/reducers";
+import { reducers as createTransactionReducers } from "./create-transaction/store/reducers";
 import { GetCurrentUserEffect } from "./data/store/effects/getCurrentUser.effect";
 import { GetTransactionsEffect } from "./data/store/effects/getTransactions.effect";
 import { DataComponent } from "./data/data.component";
+import { SharedModule } from "../shared/shared.module";
+import { GetUsersEffect } from "./create-transaction/store/effects/getUsers.effect";
 
 @NgModule({
   declarations: [CreateTransactionComponent, MainComponent, DataComponent],
@@ -24,8 +27,14 @@ import { DataComponent } from "./data/data.component";
     MainRoutingModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    StoreModule.forFeature("data", reducers),
-    EffectsModule.forFeature([GetCurrentUserEffect, GetTransactionsEffect]),
+    SharedModule,
+    StoreModule.forFeature("data", dataReducers),
+    StoreModule.forFeature("createTransaction", createTransactionReducers),
+    EffectsModule.forFeature([
+      GetCurrentUserEffect,
+      GetTransactionsEffect,
+      GetUsersEffect,
+    ]),
   ],
   providers: [MainService],
   exports: [MainComponent],

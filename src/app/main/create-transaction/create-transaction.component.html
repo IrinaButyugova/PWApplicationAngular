@@ -1,13 +1,17 @@
 <div class="container-md">
     <h2>Create transaction</h2>
+    @if(errorMessage$ | async){
+        <error-message [message]="errorMessage$ | async"></error-message>
+    }
     <form [formGroup]="createTransactionForm" novalidate (ngSubmit)="submit()">
-        <div class="alert alert-danger" *ngIf="errorMessage != ''">
-            {{errorMessage}}
-        </div>
         <div class="mb-3">
             <label for="name" class="form-label">Recipient name</label>
             <select class="form-select" formControlName="name" id="name">
-                <option *ngFor="let userInfo of usersInfo" value="{{userInfo.name}}">{{userInfo.name}}</option> 
+                @if(users$ | async){
+                    @for(user of (users$ | async); track user){
+                        <option value="{{user.name}}">{{user.name}}</option> 
+                    }
+                }
             </select>
             <div class="alert alert-danger"
                 *ngIf="createTransactionForm.controls['name'].invalid && createTransactionForm.controls['name'].touched">

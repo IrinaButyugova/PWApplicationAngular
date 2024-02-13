@@ -1,26 +1,30 @@
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { catchError } from "rxjs/operators";
 
 import { CreateTransactionFormModel } from "./create-transaction-form.model";
-import { MainService } from "../services/main.service";
-import { UserInterface } from "./types/user.interface";
+import { UserInterface } from "../types/user.interface";
+import { Observable } from "rxjs";
+import { Store, select } from "@ngrx/store";
+import { errorSelector, usersSelector } from "./store/selectors";
+import { getUsersAction } from "./store/actions/getUsers.action";
 
 @Component({
   selector: "create-tran",
   templateUrl: "./create-transaction.component.html",
 })
 export class CreateTransactionComponent implements OnInit {
-  createTransactionForm: FormGroup;
-  errorMessage: string = "";
-  usersInfo: Array<UserInterface> = new Array();
+  createTransactionForm!: FormGroup;
+  users$!: Observable<UserInterface[] | null>;
+  errorMessage$!: Observable<string | null>;
 
   constructor(
-    private mainService: MainService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
-  ) {
+    private route: ActivatedRoute,
+    private store: Store
+  ) {}
+
+  ngOnInit(): void {
     this.createTransactionForm = this.formBuilder.group(
       new CreateTransactionFormModel()
     );
@@ -32,42 +36,18 @@ export class CreateTransactionComponent implements OnInit {
       Validators.min(0),
     ]);
 
-    route.queryParams.subscribe((queryParam: any) => {
+    this.route.queryParams.subscribe((queryParam: any) => {
       this.createTransactionForm.controls["name"].setValue(queryParam["name"]);
       this.createTransactionForm.controls["amount"].setValue(
         queryParam["amount"]
       );
     });
+
+    this.users$ = this.store.pipe(select(usersSelector));
+    this.errorMessage$ = this.store.pipe(select(errorSelector));
+
+    this.store.dispatch(getUsersAction());
   }
 
-  ngOnInit() {
-    this.mainService
-    .getFilteredUserList$()
-    .pipe(
-      catchError((err) => {
-        this.errorMessage = err.error;
-        throw err;
-      })
-    )
-    .subscribe((data: Array<UserInterface>) => {
-      this.usersInfo = data;
-    });
-  }
-
-  submit() {
-    this.mainService
-    .createTransaction$(
-      this.createTransactionForm.value["name"],
-      this.createTransactionForm.value["amount"]
-    )
-    .pipe(
-      catchError((err) => {
-        this.errorMessage = err.error;
-        throw err;
-      })
-    )
-    .subscribe(() => {
-      this.errorMessage = "";
-    });
-  }
+  submit() {}
 }

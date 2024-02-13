@@ -11,6 +11,7 @@ import { TransactionInterface } from "../types/transaction.iterface";
 import { CurrentUserInterface } from "../types/currentUser.interface";
 import { CurrentUserResponseInterface } from "../types/currentUserResponse.interface";
 import { TransactionsResponseInterface } from "../types/transactionsResponse.interface";
+import { UserInterface } from "../types/user.interface";
 
 @Injectable()
 export class MainService {
@@ -40,22 +41,18 @@ export class MainService {
     );
   }
 
-  public getFilteredUserList$() {
+  public getFilteredUserList(): Observable<UserInterface[]> {
     const httpHeaders = new HttpHeaders().set(
       "Authorization",
       this.getTokenString()
     );
     const body = { filter: " " };
-    return this.http
-    .post(`${environment.baseUrl}api/protected/users/list`, body, {
-      headers: httpHeaders,
-    })
-    .pipe(
-      map((response: any) => {
-        return response.map((data: any) => {
-          return null; //new UserInfo(data.id, data.name);
-        });
-      })
+    return this.http.post<UserInterface[]>(
+      `${environment.baseUrl}api/protected/users/list`,
+      body,
+      {
+        headers: httpHeaders,
+      }
     );
   }
 
